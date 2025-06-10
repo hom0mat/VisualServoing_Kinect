@@ -1,0 +1,52 @@
+[0.883s] Invoking command in '/home/mateo/VisualServoing_Kinect/ros2_ws/src/pose_estimation': PYTHONPATH=/home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/pose_estimation build --build-base /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/build install --record /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/install.log --single-version-externally-managed install_data
+[1.231s] running egg_info
+[1.231s] creating ../../build/pose_estimation/pose_estimation.egg-info
+[1.231s] writing ../../build/pose_estimation/pose_estimation.egg-info/PKG-INFO
+[1.231s] writing dependency_links to ../../build/pose_estimation/pose_estimation.egg-info/dependency_links.txt
+[1.234s] writing entry points to ../../build/pose_estimation/pose_estimation.egg-info/entry_points.txt
+[1.238s] writing requirements to ../../build/pose_estimation/pose_estimation.egg-info/requires.txt
+[1.238s] writing top-level names to ../../build/pose_estimation/pose_estimation.egg-info/top_level.txt
+[1.238s] writing manifest file '../../build/pose_estimation/pose_estimation.egg-info/SOURCES.txt'
+[1.242s] reading manifest file '../../build/pose_estimation/pose_estimation.egg-info/SOURCES.txt'
+[1.242s] adding license file 'LICENSE'
+[1.244s] writing manifest file '../../build/pose_estimation/pose_estimation.egg-info/SOURCES.txt'
+[1.244s] running build
+[1.244s] running build_py
+[1.244s] creating /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/build
+[1.249s] creating /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/build/lib
+[1.249s] creating /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/build/lib/pose_estimation
+[1.249s] copying pose_estimation/image_segmentation.py -> /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/build/lib/pose_estimation
+[1.250s] copying pose_estimation/pose_estimator.py -> /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/build/lib/pose_estimation
+[1.250s] copying pose_estimation/__init__.py -> /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/build/lib/pose_estimation
+[1.250s] copying pose_estimation/point_cloud_generator.py -> /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/build/lib/pose_estimation
+[1.250s] running install
+[1.251s] running install_lib
+[1.258s] creating /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/python3.10/site-packages/pose_estimation
+[1.258s] copying /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/build/lib/pose_estimation/image_segmentation.py -> /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/python3.10/site-packages/pose_estimation
+[1.258s] copying /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/build/lib/pose_estimation/pose_estimator.py -> /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/python3.10/site-packages/pose_estimation
+[1.258s] copying /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/build/lib/pose_estimation/__init__.py -> /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/python3.10/site-packages/pose_estimation
+[1.258s] copying /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/build/lib/pose_estimation/point_cloud_generator.py -> /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/python3.10/site-packages/pose_estimation
+[1.263s] byte-compiling /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/python3.10/site-packages/pose_estimation/image_segmentation.py to image_segmentation.cpython-310.pyc
+[1.274s] byte-compiling /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/python3.10/site-packages/pose_estimation/pose_estimator.py to pose_estimator.cpython-310.pyc
+[1.288s] byte-compiling /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/python3.10/site-packages/pose_estimation/__init__.py to __init__.cpython-310.pyc
+[1.289s] byte-compiling /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/python3.10/site-packages/pose_estimation/point_cloud_generator.py to point_cloud_generator.cpython-310.pyc
+[1.296s] running install_data
+[1.297s] creating /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/share/ament_index
+[1.297s] creating /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/share/ament_index/resource_index
+[1.297s] creating /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/share/ament_index/resource_index/packages
+[1.298s] copying resource/pose_estimation -> /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/share/ament_index/resource_index/packages
+[1.298s] copying package.xml -> /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/share/pose_estimation
+[1.299s] creating /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/share/pose_estimation/config
+[1.299s] copying config/kinect_calibration.yaml -> /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/share/pose_estimation/config
+[1.299s] copying config/segmentation_point_cloud_config.yaml -> /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/share/pose_estimation/config
+[1.299s] creating /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/share/pose_estimation/launch
+[1.303s] copying launch/segmentation_point_cloud.launch.py -> /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/share/pose_estimation/launch
+[1.304s] running install_egg_info
+[1.309s] Copying ../../build/pose_estimation/pose_estimation.egg-info to /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/python3.10/site-packages/pose_estimation-0.1.0-py3.10.egg-info
+[1.309s] running install_scripts
+[1.397s] Installing image_segmentation script to /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/pose_estimation
+[1.397s] Installing point_cloud_generator script to /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/pose_estimation
+[1.399s] Installing point_cloud_visualizer script to /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/pose_estimation
+[1.399s] Installing pose_estimator script to /home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/pose_estimation
+[1.399s] writing list of installed files to '/home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/install.log'
+[1.560s] Invoked command in '/home/mateo/VisualServoing_Kinect/ros2_ws/src/pose_estimation' returned '0': PYTHONPATH=/home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/mateo/VisualServoing_Kinect/ros2_ws/install/pose_estimation/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/pose_estimation build --build-base /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/build install --record /home/mateo/VisualServoing_Kinect/ros2_ws/build/pose_estimation/install.log --single-version-externally-managed install_data

@@ -1,0 +1,6 @@
+[console_scripts]
+image_segmentation = pose_estimation.image_segmentation:main
+point_cloud_generator = pose_estimation.point_cloud_generator:main
+point_cloud_visualizer = pose_estimation.point_cloud_visualizer:main
+pose_estimator = pose_estimation.pose_estimator:main
+

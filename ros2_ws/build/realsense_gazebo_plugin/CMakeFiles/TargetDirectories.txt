@@ -1,0 +1,10 @@
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/realsense_gazebo_plugin/CMakeFiles/uninstall.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/realsense_gazebo_plugin/CMakeFiles/realsense_gazebo_plugin_uninstall.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/realsense_gazebo_plugin/CMakeFiles/realsense_gazebo_plugin.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/realsense_gazebo_plugin/CMakeFiles/test.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/realsense_gazebo_plugin/CMakeFiles/edit_cache.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/realsense_gazebo_plugin/CMakeFiles/rebuild_cache.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/realsense_gazebo_plugin/CMakeFiles/list_install_components.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/realsense_gazebo_plugin/CMakeFiles/install.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/realsense_gazebo_plugin/CMakeFiles/install/local.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/realsense_gazebo_plugin/CMakeFiles/install/strip.dir

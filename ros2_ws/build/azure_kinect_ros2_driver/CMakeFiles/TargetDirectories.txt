@@ -1,0 +1,12 @@
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/azure_kinect_ros2_driver/CMakeFiles/uninstall.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/azure_kinect_ros2_driver/CMakeFiles/azure_kinect_ros2_driver_uninstall.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/azure_kinect_ros2_driver/CMakeFiles/azure_kinect_node.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/azure_kinect_ros2_driver/CMakeFiles/ament_cmake_python_copy_azure_kinect_ros2_driver.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/azure_kinect_ros2_driver/CMakeFiles/ament_cmake_python_build_azure_kinect_ros2_driver_egg.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/azure_kinect_ros2_driver/CMakeFiles/test.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/azure_kinect_ros2_driver/CMakeFiles/edit_cache.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/azure_kinect_ros2_driver/CMakeFiles/rebuild_cache.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/azure_kinect_ros2_driver/CMakeFiles/list_install_components.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/azure_kinect_ros2_driver/CMakeFiles/install.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/azure_kinect_ros2_driver/CMakeFiles/install/local.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/azure_kinect_ros2_driver/CMakeFiles/install/strip.dir

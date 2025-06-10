@@ -1,0 +1,169 @@
+#Ultima version que jala chido con RANSAC e ICP pero después de bastantes iteraciones, puede ser mejorado JUN10_13.35
+
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import PointCloud2, PointField
+from std_msgs.msg import Header
+import sensor_msgs_py.point_cloud2 as pc2
+import open3d as o3d
+import numpy as np
+import math
+from visualization_msgs.msg import Marker
+from builtin_interfaces.msg import Duration
+from tf2_ros import TransformBroadcaster
+from geometry_msgs.msg import TransformStamped
+
+class PoseEstimator(Node):
+    def __init__(self):
+        super().__init__('pose_estimator')
+        # Parámetros
+        self.declare_parameter('reference_ply', '/home/mateo/X-ARM_VisualServoing/OilPan/PointClouds/oil_pan_full_pc_10000.ply')
+        self.declare_parameter('voxel_size', 0.005)
+        self.declare_parameter('ransac_distance', 0.01)
+        self.declare_parameter('ransac_n', 4)
+        self.declare_parameter('ransac_iterations', 100000)
+        self.declare_parameter('icp_distance', 0.005)
+        self.declare_parameter('use_ransac', True)  # puede desactivar RANSAC
+        
+        # Lectura parámetros
+        self.ply_path = self.get_parameter('reference_ply').value
+        self.voxel_size = self.get_parameter('voxel_size').value
+        self.ransac_distance = self.get_parameter('ransac_distance').value
+        self.ransac_n = int(self.get_parameter('ransac_n').value)
+        self.ransac_iterations = int(self.get_parameter('ransac_iterations').value)
+        self.icp_distance = self.get_parameter('icp_distance').value
+        self.use_ransac = bool(self.get_parameter('use_ransac').value)
+
+        # Publicadores y TF
+        self.reference_pub = self.create_publisher(PointCloud2, '/pointcloud/reference_object', 10)
+        self.aligned_pub   = self.create_publisher(PointCloud2, '/pointcloud/aligned_model', 10)
+        self.tf_broadcaster = TransformBroadcaster(self)
+        self.subscription = self.create_subscription(PointCloud2, '/pointcloud/segmented_object', self.cloud_callback, 10)
+
+        self.get_logger().info(f"Cargando CAD de referencia: {self.ply_path}")
+        self.reference_pcd = o3d.io.read_point_cloud(self.ply_path)
+        self.timer = self.create_timer(1.0, self.publish_reference_cloud)
+
+    def publish_reference_cloud(self):
+        msg = self.convert_pcd_to_ros_msg(self.reference_pcd)
+        self.reference_pub.publish(msg)
+
+    def convert_pcd_to_ros_msg(self, pcd):
+        points = np.asarray(pcd.points)
+        colors = np.asarray(pcd.colors) if pcd.has_colors() else None
+        data = []
+        for i, pt in enumerate(points):
+            x,y,z = pt
+            if colors is not None:
+                r,g,b = [int(c*255) for c in colors[i]]
+            else:
+                r=g=b=255
+            rgb = (r<<16)|(g<<8)|b
+            data.append((x,y,z,rgb))
+        fields = [
+            PointField(name='x',offset=0,datatype=PointField.FLOAT32,count=1),
+            PointField(name='y',offset=4,datatype=PointField.FLOAT32,count=1),
+            PointField(name='z',offset=8,datatype=PointField.FLOAT32,count=1),
+            PointField(name='rgb',offset=12,datatype=PointField.UINT32,count=1),
+        ]
+        header = Header()
+        header.stamp = self.get_clock().now().to_msg()
+        header.frame_id = 'camera_color_optical_frame'
+        return pc2.create_cloud(header, fields, data)
+
+    def matrix_to_quaternion(self, m):
+        trace = np.trace(m)
+        if trace>0:
+            S = math.sqrt(trace+1.0)*2
+            qw = 0.25*S
+            qx = (m[2,1]-m[1,2])/S
+            qy = (m[0,2]-m[2,0])/S
+            qz = (m[1,0]-m[0,1])/S
+        else:
+            i = np.argmax([m[0,0],m[1,1],m[2,2]])
+            if i==0:
+                S = math.sqrt(1.0+m[0,0]-m[1,1]-m[2,2])*2
+                qw = (m[2,1]-m[1,2])/S; qx = 0.25*S; qy = (m[0,1]+m[1,0])/S; qz = (m[0,2]+m[2,0])/S
+            elif i==1:
+                S = math.sqrt(1.0+m[1,1]-m[0,0]-m[2,2])*2
+                qw = (m[0,2]-m[2,0])/S; qx = (m[0,1]+m[1,0])/S; qy = 0.25*S; qz = (m[1,2]+m[2,1])/S
+            else:
+                S = math.sqrt(1.0+m[2,2]-m[0,0]-m[1,1])*2
+                qw = (m[1,0]-m[0,1])/S; qx = (m[0,2]+m[2,0])/S; qy = (m[1,2]+m[2,1])/S; qz = 0.25*S
+        return np.array([qx,qy,qz,qw])
+
+    def cloud_callback(self,msg):
+        # Nube segmentada
+        pts = [tuple(p) for p in pc2.read_points(msg,field_names=('x','y','z'),skip_nans=True)]
+        if not pts: return
+        xyz = np.array(pts,dtype=np.float64)
+        live = o3d.geometry.PointCloud(); live.points=o3d.utility.Vector3dVector(xyz)
+        # Alineación inicial
+        cen_live=np.mean(xyz,axis=0)
+        cen_model=np.mean(np.asarray(self.reference_pcd.points),axis=0)
+        d_live=np.max(np.linalg.norm(xyz-cen_live,axis=1))
+        d_model=np.max(np.linalg.norm(np.asarray(self.reference_pcd.points)-cen_model,axis=1))
+        scale=d_live/d_model if d_model>0 else 1.0
+        model_scaled=self.reference_pcd.translate((0,0,0),relative=False)
+        model_scaled.scale(scale,center=cen_model)
+        translation=cen_live-cen_model
+        model_init=model_scaled.translate(translation,relative=True)
+
+        # Ejecución independiente o conjunta
+        best_trans = None; best_score = -np.inf
+        methods=[]
+        if self.use_ransac:
+            methods.append('ransac_icp')
+        methods.append('icp_alone')
+
+        for m in methods:
+            if m=='ransac_icp':
+                # RANSAC
+                src_down=model_init.voxel_down_sample(self.voxel_size)
+                tgt_down=live.voxel_down_sample(self.voxel_size)
+                src_down.estimate_normals(o3d.geometry.KDTreeSearchParamHybrid(radius=self.voxel_size*2,max_nn=30))
+                tgt_down.estimate_normals(o3d.geometry.KDTreeSearchParamHybrid(radius=self.voxel_size*2,max_nn=30))
+                fpfh_src=o3d.pipelines.registration.compute_fpfh_feature(src_down,o3d.geometry.KDTreeSearchParamHybrid(radius=self.voxel_size*5,max_nn=100))
+                fpfh_tgt=o3d.pipelines.registration.compute_fpfh_feature(tgt_down,o3d.geometry.KDTreeSearchParamHybrid(radius=self.voxel_size*5,max_nn=100))
+                ransac_res=o3d.pipelines.registration.registration_ransac_based_on_feature_matching(
+                    src_down,tgt_down,fpfh_src,fpfh_tgt,True,
+                    self.ransac_distance,o3d.pipelines.registration.TransformationEstimationPointToPoint(False),
+                    self.ransac_n,[
+                        o3d.pipelines.registration.CorrespondenceCheckerBasedOnEdgeLength(0.9),
+                        o3d.pipelines.registration.CorrespondenceCheckerBasedOnDistance(self.ransac_distance)
+                    ],
+                    o3d.pipelines.registration.RANSACConvergenceCriteria(self.ransac_iterations,0.999)
+                )
+                # ICP refinado
+                icp_res=o3d.pipelines.registration.registration_icp(
+                    model_init.transform(ransac_res.transformation),live,self.icp_distance,np.identity(4),
+                    o3d.pipelines.registration.TransformationEstimationPointToPoint())
+                score=icp_res.fitness - icp_res.inlier_rmse
+                trans=icp_res.transformation @ ransac_res.transformation
+            else:
+                # ICP directo
+                icp_res=o3d.pipelines.registration.registration_icp(
+                    model_init,live,self.icp_distance,np.identity(4),
+                    o3d.pipelines.registration.TransformationEstimationPointToPoint())
+                score=icp_res.fitness - icp_res.inlier_rmse
+                trans=icp_res.transformation
+            if score>best_score:
+                best_score=score; best_trans=trans
+                self.get_logger().info(f"Método {m} elegido, score={score:.4f}")
+
+        # Aplicar mejor transformación
+        final_model=model_init.transform(best_trans)
+        self.aligned_pub.publish(self.convert_pcd_to_ros_msg(final_model))
+        # Publicar TF
+        t=TransformStamped(); t.header.stamp=self.get_clock().now().to_msg()
+        t.header.frame_id='camera_color_optical_frame'; t.child_frame_id='object_frame'
+        t.transform.translation.x=float(best_trans[0,3]); t.transform.translation.y=float(best_trans[1,3]); t.transform.translation.z=float(best_trans[2,3])
+        qx,qy,qz,qw=self.matrix_to_quaternion(best_trans[:3,:3])
+        t.transform.rotation.x=float(qx); t.transform.rotation.y=float(qy); t.transform.rotation.z=float(qz); t.transform.rotation.w=float(qw)
+        self.tf_broadcaster.sendTransform(t)
+
+
+def main(args=None):
+    rclpy.init(args=args); node=PoseEstimator(); rclpy.spin(node); node.destroy_node(); rclpy.shutdown()
+
+if __name__=='__main__': main()

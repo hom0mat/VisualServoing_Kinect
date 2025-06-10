@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: pose-estimation
+Version: 0.1.0
+Summary: Visual servoing package for X-ARM robot with Azure Kinect.
+Home-page: UNKNOWN
+Maintainer: Mateo Sanchez
+Maintainer-email: neronf123@gmail.com
+License: Apache-2.0
+Platform: UNKNOWN
+License-File: LICENSE
+
+UNKNOWN
+

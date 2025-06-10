@@ -1,0 +1,9 @@
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/xarm_moveit_config/CMakeFiles/uninstall.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/xarm_moveit_config/CMakeFiles/xarm_moveit_config_uninstall.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/xarm_moveit_config/CMakeFiles/test.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/xarm_moveit_config/CMakeFiles/edit_cache.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/xarm_moveit_config/CMakeFiles/rebuild_cache.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/xarm_moveit_config/CMakeFiles/list_install_components.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/xarm_moveit_config/CMakeFiles/install.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/xarm_moveit_config/CMakeFiles/install/local.dir
+/home/mateo/VisualServoing_Kinect/ros2_ws/build/xarm_moveit_config/CMakeFiles/install/strip.dir
